@@ -4,7 +4,7 @@ import { makeRedirectUri, useAuthRequest, ResponseType } from 'expo-auth-session
 import getEnv from './env';
 
 // Extract environment variables.
-const { CLIENT_ID, SCOPES, SPOTIFY_API: { DISCOVERY } } = getEnv();
+const { REDIRECT_URI, CLIENT_ID, SCOPES, ALBUM_ID, SPOTIFY_API: { DISCOVERY } } = getEnv();
 
 WebBrowser.maybeCompleteAuthSession(); // Ensure the browser closes after login.
 
@@ -16,8 +16,9 @@ const useSpotifyAuth = () => {
       responseType: ResponseType.Token,
       clientId: CLIENT_ID,
       scopes: SCOPES,
-      redirectUri: makeRedirectUri({ scheme: 'your.app' }),
-      usePKCE: false, // PKCE not needed for Spotify implicit grant flow.
+      
+      usePKCE: false, 
+      redirectUri: REDIRECT_URI,
     },
     DISCOVERY
   );
